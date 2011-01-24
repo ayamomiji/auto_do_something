@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{auto_do_something}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["ayaya"]
-  s.date = %q{2011-01-24}
+  s.date = %q{2011-01-25}
   s.description = %q{A simple Ruby on Rails plugin to let model auto do something (like strip, downcase, etc.) before validation.}
   s.email = %q{ayaya@aya.idv.tw}
   s.extra_rdoc_files = [
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "auto_do_something.gemspec",
     "init.rb",
     "lib/auto_do_something.rb",
     "spec/auto_do_something_spec.rb",
