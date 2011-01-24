@@ -36,6 +36,16 @@ Add <tt>auto_#{method_name} [fields...]</tt> in your model class.
     auto_downcase :email
   end
 
+== Install
+
+Gemfile:
+
+  gem 'auto_do_something', :git => 'git://github.com/ayamomiji/auto_do_something.git'
+
+or install as a plugin:
+
+  rails plugin install git://github.com/ayamomiji/auto_do_something.git
+
 == Contributing to auto_do_something
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
