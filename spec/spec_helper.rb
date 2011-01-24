@@ -11,21 +11,32 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 RSpec.configure do |config|
 end
 
-class String
-  def do_something
-    "DS: #{self}"
-  end
-end
-
-class Item
+class User
   extend ActiveModel::Naming
   include ActiveModel::Conversion
   include ActiveModel::Validations
   include ActiveModel::Validations::Callbacks
   include AutoDoSomething
 
-  attr_accessor :value, :another_value
-  auto_do_something :value, :another_value
+  # mass assignment
+  def initialize(attrs)
+    attrs.each do |k, v|
+      send("#{k}=", v)
+    end
+  end
+
+  attr_accessor :nickname, :email, :info
+
+  # i want strip these fields
+  auto :strip, :for => [:nickname, :email, :info]
+
+  # and i want downcase all email address
+  auto :downcase, :for => :email
+
+  # if info is too long, then just truncate it
+  auto :[], :with => 0...10, :for => :info
+  # or
+  #auto_do :[], :with => [0, 10], :for => :info
 
   def persisted?
     false

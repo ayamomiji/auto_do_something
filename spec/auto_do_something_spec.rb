@@ -1,29 +1,29 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe AutoDoSomething do
-  let(:item) { Item.new }
-
-  it 'auto do something after validation' do
-    item = Item.new
-    item.value = 'value'
-    item.another_value = 'another_value'
-    item.value.should == 'value'
-    item.another_value.should == 'another_value'
-
-    item.valid?
-    item.value.should == 'DS: value'
-    item.another_value.should == 'DS: another_value'
+  it 'should strip all fields' do
+    user = User.new(:nickname => ' ayaya ',
+                    :email => ' ayaya@example.com ',
+                    :info => ' hello! ')
+    user.valid?
+    user.nickname.should == 'ayaya'
+    user.email.should == 'ayaya@example.com'
+    user.info.should == 'hello!'
   end
 
-  it 'dont do anything if attribute value is not respond to method' do
-    item = Item.new
-    item.value = :'value'
-    item.another_value = :'another_value'
-    item.value.should == :'value'
-    item.another_value.should == :'another_value'
+  it 'should strip and downcase email' do
+    user = User.new(:nickname => ' ayaya ',
+                    :email => ' AYAYA@EXAMPLE.COM ',
+                    :info => ' hello! ')
+    user.valid?
+    user.email.should == 'ayaya@example.com'
+  end
 
-    item.valid?
-    item.value.should == :'value'
-    item.another_value.should == :'another_value'
+  it 'should truncate info to 10 characters' do
+    user = User.new(:nickname => ' ayaya ',
+                    :email => ' AYAYA@EXAMPLE.COM ',
+                    :info => ' hello world! ')
+    user.valid?
+    user.info.should == 'hello worl'
   end
 end

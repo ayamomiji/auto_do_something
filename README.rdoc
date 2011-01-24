@@ -4,37 +4,47 @@ A simple Ruby on Rails plugin to let model auto do something (like strip, downca
 
 == Usage
 
-Add <tt>auto_#{method_name} [fields...]</tt> in your model class.
+Before validation do strip, in your model:
+
+  auto :strip, :for => :field
+
+For many fields:
+
+  auto :strip, :for => [:field1, :field2, ...]
+
+Before validation do substr (with one argument):
+
+  auto :[], :with => 0...10, :for => :field_or_fields
+
+Or if you want with more argument:
+
+  auto :[], :with => [0, 10], :for => :field_or_fields
 
 === In ActiveRecord
 
+An example from spec:
+
   class Item < ActiveRecord::Base
-    auto_strip :nickname, :email
-    auto_downcase :email
+    auto :strip, :for => [:nickname, :email, :info]
+    auto :downcase, :for => :email
+    auto :[], :with => 0...10, :for => :info
+    # or
+    auto :[], :with => [0, 10], :for => :info
   end
 
-  item = Item.new(:nickname => 'ayaya ', :email => ' AYAYA@EXAMPLE.COM ')
-  item.save
-  item.nickname # => 'ayaya'
-  item.email # => 'ayaya@example.com'
+  user = User.new(:nickname => ' ayaya ',
+                  :email => ' AYAYA@EXAMPLE.COM ',
+                  :info => ' hello world! ')
+  user.valid? # or save
+
+  user.nickname.should == 'ayaya'
+  user.email.should == 'ayaya@example.com'
+  user.info.should == 'hello worl'
 
 === In ActiveModel
 
-  class User
-    extend ActiveModel::Naming
-    include ActiveModel::Conversion
-    include ActiveModel::Validations
-    include ActiveModel::Validations::Callbacks
-    include AutoDoSomething
-
-    def persisted?
-      false
-    end
-
-    attr_accessor :nickname, :email
-    auto_strip :nickname, :email
-    auto_downcase :email
-  end
+Just <tt>include AutoDoSomething</tt> in model class then use it like in ActiveRecord,
+see full example in <tt>spec/spec_helper.rb</tt>.
 
 == Install
 
