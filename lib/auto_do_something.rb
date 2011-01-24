@@ -16,7 +16,7 @@ module AutoDoSomething
         class_eval do
           before_validation do |model|
             if model.respond_to?(:[]) && model.respond_to?(:[]=)
-              model[n] = model[n].send(method, *args) if model[n].respond_to?(method)
+              model[field] = model[field].send(method, *args) if model[field].respond_to?(method)
             else
               getter = field
               setter = "#{field}=".to_sym

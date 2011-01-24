@@ -11,6 +11,8 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 RSpec.configure do |config|
 end
 
+# TODO: add spec for ActiveRecord
+
 class User
   extend ActiveModel::Naming
   include ActiveModel::Conversion
