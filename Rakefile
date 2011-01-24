@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "auto_do_something"
   gem.homepage = "http://github.com/ayamomiji/auto_do_something"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{A simple Ruby on Rails plugin to let model auto do something before validation.}
+  gem.description = %Q{A simple Ruby on Rails plugin to let model auto do something (like strip, downcase, etc.) before validation.}
   gem.email = "ayaya@aya.idv.tw"
   gem.authors = ["ayaya"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
