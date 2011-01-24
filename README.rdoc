@@ -1,9 +1,43 @@
 = auto_do_something
 
-Description goes here.
+A simple Ruby on Rails plugin to let model auto do something (like strip, downcase, etc.) before validation.
+
+== Usage
+
+Add <tt>auto_#{method_name} [fields...]</tt> in your model class.
+
+=== In ActiveRecord
+
+  class Item < ActiveRecord::Base
+    auto_strip :nickname, :email
+    auto_downcase :email
+  end
+
+  item = Item.new(:nickname => 'ayaya ', :email => ' AYAYA@EXAMPLE.COM ')
+  item.save
+  item.nickname # => 'ayaya'
+  item.email # => 'ayaya@example.com'
+
+=== In ActiveModel
+
+  class User
+    extend ActiveModel::Naming
+    include ActiveModel::Conversion
+    include ActiveModel::Validations
+    include ActiveModel::Validations::Callbacks
+    include AutoDoSomething
+
+    def persisted?
+      false
+    end
+
+    attr_accessor :nickname, :email
+    auto_strip :nickname, :email
+    auto_downcase :email
+  end
 
 == Contributing to auto_do_something
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
